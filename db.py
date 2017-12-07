@@ -32,12 +32,17 @@ def get_concepts(data):
         return ''
 
 
+def get_icon(data):
+    return data["image"]["icon_url"]
+
+
 def get_game(data):
     return Game(
         get_name(data),
         genres=get_genres(data),
         themes=get_themes(data),
-        concepts=get_concepts(data)
+        concepts=get_concepts(data),
+        icon=get_icon(data)
     )
 
 

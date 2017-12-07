@@ -60,12 +60,13 @@ def cluster(games, n_clusters):
         if cluster_num not in results:
             results[cluster_num] = []
 
-        results[cluster_num].append(game.name)
+        results[cluster_num].append(game)
 
-    for key, value in results.items():
+    for key, values in results.items():
         print('Cluster {}'.format(key))
         print('----------')
-        print('\n'.join(value))
+        for game in values:
+            print(game.name)
         print('\n')
 
     return results.values()
