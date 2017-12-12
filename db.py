@@ -32,6 +32,30 @@ def get_concepts(data):
         return ''
 
 
+def get_locations(data):
+    try:
+        locations = map(lambda g: g['name'], data['locations'])
+        return ','.join(locations)
+    except (KeyError, TypeError):
+        return ''
+
+
+def get_developers(data):
+    try:
+        developers = map(lambda g: g['name'], data['developers'])
+        return ','.join(developers)
+    except (KeyError, TypeError):
+        return ''
+
+
+def get_platforms(data):
+    try:
+        platforms = map(lambda g: g['name'], data['platforms'])
+        return ','.join(platforms)
+    except (KeyError, TypeError):
+        return ''
+
+
 def get_icon(data):
     return data["image"]["icon_url"]
 
@@ -42,6 +66,9 @@ def get_game(data):
         genres=get_genres(data),
         themes=get_themes(data),
         concepts=get_concepts(data),
+        locations=get_locations(data),
+        developers=get_developers(data),
+        platforms=get_platforms(data),
         icon=get_icon(data)
     )
 
@@ -57,7 +84,6 @@ WHERE
   AND data->>'concepts' IS NOT NULL
   AND data->>'genres' IS NOT NULL
 ORDER BY id DESC
-LIMIT 200
 '''
     curr.execute(sql)
     data = map(lambda row: row[0], curr.fetchall())

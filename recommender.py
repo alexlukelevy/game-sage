@@ -34,22 +34,43 @@ def cluster(games, n_clusters):
         ('tfidf', TfidfVectorizer(input='content', analyzer='word', tokenizer=tokenizer, lowercase=True))
     ])
 
+    location_pipeline = Pipeline([
+        ('selector', ItemSelector('locations')),
+        ('tfidf', TfidfVectorizer(input='content', analyzer='word', tokenizer=tokenizer, lowercase=True))
+    ])
+
+    developer_pipeline = Pipeline([
+        ('selector', ItemSelector('developers')),
+        ('tfidf', TfidfVectorizer(input='content', analyzer='word', tokenizer=tokenizer, lowercase=True))
+    ])
+
+    platform_pipeline = Pipeline([
+        ('selector', ItemSelector('platforms')),
+        ('tfidf', TfidfVectorizer(input='content', analyzer='word', tokenizer=tokenizer, lowercase=True))
+    ])
+
     features = FeatureUnion(
         transformer_list=[
             ('genre', genre_pipeline),
             ('theme', theme_pipeline),
             ('concept', concept_pipeline),
+            ('location', location_pipeline),
+            ('developer', developer_pipeline),
+            ('platform', platform_pipeline),
         ],
         transformer_weights={
             'genre': 1,
-            'theme': 0.2,
-            'concept': 0.3,
+            'theme': 0.4,
+            'concept': 0.4,
+            'location': 0.1,
+            'developer': 0.2,
+            'platform': 0.2,
         }
     )
 
     x = features.fit_transform(games)
 
-    km = KMeans(n_clusters=n_clusters, max_iter=10000)
+    km = KMeans(n_clusters=n_clusters, max_iter=10000, tol=1e-5)
     km.fit(x)
 
     results = dict()
