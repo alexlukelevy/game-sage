@@ -8,52 +8,36 @@ def get_name(data):
     return data['name']
 
 
-def get_genres(data):
+def get_property(data, prop):
     try:
-        genres = map(lambda g: g['name'], data['genres'])
-        return ','.join(genres)
-    except KeyError:
+        values = map(lambda g: g['name'], data[prop])
+        return ','.join(values)
+    except (KeyError, TypeError):
         return ''
+
+
+def get_genres(data):
+    return get_property(data, 'genres')
 
 
 def get_themes(data):
-    try:
-        themes = map(lambda g: g['name'], data['themes'])
-        return ','.join(themes)
-    except KeyError:
-        return ''
+    return get_property(data, 'themes')
 
 
 def get_concepts(data):
-    try:
-        concepts = map(lambda g: g['name'], data['concepts'])
-        return ','.join(concepts)
-    except (KeyError, TypeError):
-        return ''
+    return get_property(data, 'concepts')
 
 
 def get_locations(data):
-    try:
-        locations = map(lambda g: g['name'], data['locations'])
-        return ','.join(locations)
-    except (KeyError, TypeError):
-        return ''
+    return get_property(data, 'locations')
 
 
 def get_developers(data):
-    try:
-        developers = map(lambda g: g['name'], data['developers'])
-        return ','.join(developers)
-    except (KeyError, TypeError):
-        return ''
+    return get_property(data, 'developers')
 
 
 def get_platforms(data):
-    try:
-        platforms = map(lambda g: g['name'], data['platforms'])
-        return ','.join(platforms)
-    except (KeyError, TypeError):
-        return ''
+    return get_property(data, 'platforms')
 
 
 def get_icon(data):

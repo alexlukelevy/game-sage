@@ -83,11 +83,4 @@ def cluster(games, n_clusters):
 
         results[cluster_num].append(game)
 
-    for key, values in results.items():
-        print('Cluster {}'.format(key))
-        print('----------')
-        for game in values:
-            print(game.name)
-        print('\n')
-
     return results.values()
